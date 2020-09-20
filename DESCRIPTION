@@ -17,3 +17,5 @@ Imports:
 Suggests: 
     testthat
 Config/testthat/edition: 2
+URL: https://github.com/tyluRp/shinyconsole
+BugReports: https://github.com/tyluRp/shinyconsole/issues

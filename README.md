@@ -1,0 +1,61 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+shinyconsole
+============
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of shinyconsole is to capture the output of all shiny inputs
+and reactiveValues with a single function, then print them to the
+console.
+
+Installation
+------------
+
+You can install the development version from GitHub with:
+
+    # install.packages("devtools")
+    devtools::install_github("tylurp/shinyconsole")
+
+Example
+-------
+
+Consider the following shiny app:
+
+    library(shiny)
+    library(shinyconsole)
+
+    ui <- fluidPage(
+      column(
+        width = 12,
+        align = "center",
+        h1("shiny console"),
+        checkboxInput("checkbox", "Click me!"),
+        sliderInput("slider", "slider", 0, 10, c(0, 10))
+      )
+    )
+    server <- function(input, output, session) {
+      shinyconsole(session, rv)
+      rv <- reactiveValues(
+        checkbox_message = character(),
+        null = NULL,
+        empty = logical()
+      )
+      observeEvent(input$checkbox, {
+        if (input$checkbox) rv$checkbox_message <- "Checkbox has been checked!"
+        else rv$checkbox_message <- "Checkbox has been unchecked!"
+      }, ignoreInit = TRUE)
+    }
+
+    shinyApp(ui, server)
+
+The resulting console output on app load is:
+
+    [ shiny log @ 2020-09-20 13:25:31 ]
+    * input$checkbox : FALSE 
+    * input$slider : 0 10 
+    * rv$null : NULL 
+    * rv$checkbox_message : character(0) 
+    * rv$empty : logical(0) 
